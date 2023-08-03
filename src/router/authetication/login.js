@@ -8,6 +8,10 @@ router.get("",(req,res)=>{
     res.send("Hello");
 
 })
+
+router.get("/display",(req,res)=>{
+    res.send("Display Page Will Be Open")
+})
 router.post("/register",async(req,res)=>{
     try
     {
