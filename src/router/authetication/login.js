@@ -1,8 +1,8 @@
 const express=require("express");
 const registerdata=require("../../model/register");
 const router=express.Router();
-const jwt=require("jsonwebtoken");
-const scretkey="glsevents@#$09";
+const jsonwebtoken=require("jsonwebtoken");
+const authenticate=require("../../middleware/authenticate");
 
 router.get("",(req,res)=>{
     res.send("Hello");
@@ -29,17 +29,34 @@ router.post("/register",async(req,res)=>{
 router.post("/login",async(req,res)=>{
     try
     {   
+        let token;
         const email=req.body.email;
         const password=req.body.password;
-        const Registerdata=await registerdata.findOne({email:email});
-        if(Registerdata.password === password)
+
+        if(!email || !password)
         {
-            console.log("Login Sucess")
-            res.status(200).send("Login Sucess");
+            return res.status(422).json({eror:"Plese fill the data"});
         }
-        else{
-            console.log("Login invaild")
-            res.status(400).send("Wrong Username and password");
+        const Registerdata=await registerdata.findOne({email:email});
+
+        if(Registerdata)
+        {
+            const ismatch=await bcryptjs.compare(password,Registerdata.password);
+            token=await Registerdata.generateAuthToken();
+            console.log(token);
+            if(!ismatch)
+            {
+                res.status(422).json({error:"Invaild Credntial"});
+            }
+            else
+            {
+                res.json({message:"User Sign Success"});
+                res.json({msg:"Token stored"});
+            }
+        }
+        else
+        {
+                res.status(400).json({error:"Invaild Credntial"});
         }
 
     }
