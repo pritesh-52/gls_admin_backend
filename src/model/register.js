@@ -1,14 +1,11 @@
-const mongoose=require("mongoose");
-
-const Registerschema=new mongoose.Schema({
+const moongose=require("mongoose");
+const registerscehm=new moongose.Schema({
     email:{
-        type:String,
+        type:String
     },
     password:{
-        type:String,
+        type:String
     }
-
 })
-
-const Registermodel=new mongoose.model("register",Registerschema);
-module.exports=Registermodel;
+const Registerdata=new moongose.model("register",registerscehm);
+module.exports=Registerdata;
