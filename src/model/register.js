@@ -9,9 +9,9 @@ const registerscehm = new moongose.Schema({
     password: {
         type: String
     },
-    tokens:[
+    tokens: [
         {
-            token:{
+            token: {
                 type: String
             }
         }
@@ -20,21 +20,20 @@ const registerscehm = new moongose.Schema({
 registerscehm.pre('save', async function (next) {
     console.log("Inside");
     if (this.isModified('password')) {
-        this.password =await bcryptjs.hash(this.password, 12);
+        this.password = await bcryptjs.hash(this.password, 12);
     }
     next();
 })
 
-registerscehm.methods.generateAuthToken=async function(){
-    try{
-        const SCRET_KEY="CODINGSHARKSFULLSTACKDEVELOPERANDAPPLICATIONDEVELOPER";
-        let token=jsonwbtoken.sign({_id:this._id},SCRET_KEY);
-        this.tokens=this.tokens.concat({token:token});
+registerscehm.methods.generateAuthToken = async function () {
+    try {
+        const SCRET_KEY = "CODINGSHARKSFULLSTACKDEVELOPERANDAPPLICATIONDEVELOPER";
+        let token = jsonwbtoken.sign({ _id: this._id }, SCRET_KEY);
+        this.tokens = this.tokens.concat({ token: token });
         await this.save();
         return token;
     }
-    catch(e)
-    {
+    catch (e) {
         console.log(e);
     }
 }

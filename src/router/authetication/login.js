@@ -29,34 +29,17 @@ router.post("/register",async(req,res)=>{
 router.post("/login",async(req,res)=>{
     try
     {   
-        let token;
+        //let token;
         const email=req.body.email;
         const password=req.body.password;
-
-        if(!email || !password)
-        {
-            return res.status(422).json({eror:"Plese fill the data"});
-        }
         const Registerdata=await registerdata.findOne({email:email});
-
-        if(Registerdata)
+        if(Registerdata.password===password)
         {
-            const ismatch=await bcryptjs.compare(password,Registerdata.password);
-            token=await Registerdata.generateAuthToken();
-            console.log(token);
-            if(!ismatch)
-            {
-                res.status(422).json({error:"Invaild Credntial"});
-            }
-            else
-            {
-                res.json({message:"User Sign Success"});
-                res.json({msg:"Token stored"});
-            }
+            res.status(200).json({"msg":"Login"})
         }
         else
         {
-                res.status(400).json({error:"Invaild Credntial"});
+            res.status(400).json({"err":"Invaild"})
         }
 
     }
