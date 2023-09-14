@@ -5,9 +5,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'Coding@Sharks';
 
-// const User = require('../../models/Login');
-// const auth = require('../../middleware/fetchuser');
-// const { Router } = require('express');
+const User = require('../../models/Login');
+const auth = require('../../middleware/fetchuser');
+const { Router } = require('express');
 
 router.post('/',[
     body('email','Enter a Valid Email').isEmail(),
