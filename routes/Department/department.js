@@ -28,4 +28,23 @@ router.post('/add',fetchUser, async (req,res) => {
 
 });
 
+
+router.post('/adddata',async(req,res)=>{
+    const {dept_name}=req.body;
+    if(!dept_name)
+    {
+        return res.status(422).json({error:"Plze filed the proptey"});
+    }
+    try{
+        const adddata=new Department({dept_name});
+        const newdata=adddata.save();
+        res.status(201).send(newdata);
+    }
+    catch (e)
+    {
+        res.status(400).send(e);
+    }
+    
+})
+
 module.exports = router;
