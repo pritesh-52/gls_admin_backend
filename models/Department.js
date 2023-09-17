@@ -2,7 +2,8 @@ const moongoose=require("mongoose");
 const DepartmentSchema=new moongoose.Schema({
     dept_name:{
         type:String,
-        required :true
+        required :true,
+        unique:true
     }
 })
 
