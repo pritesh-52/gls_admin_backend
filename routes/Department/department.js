@@ -1,7 +1,7 @@
 const express=require("express");
 const router=express.Router();
 const Department=require("../../models/Department");
-const { trusted } = require("mongoose");
+const { trusted, get } = require("mongoose");
 
 router.post("/add",async(req,res)=>{
     let {dept_name}=req.body;
@@ -49,6 +49,28 @@ router.get("/getdepartment",async(req,res)=>{
     }
 
 });
+
+router.get("/getdepartment/:id",async(req,res)=>{
+    try
+    {
+        const _id=req.params.id;
+        const getdata=await Department.findById(_id);
+        if(!getdata)
+        {
+            res.status(404).send("Record Not Found");
+        }
+        else
+        {
+            res.send(getdata);
+        }
+        
+    }
+    catch(e)
+    {
+        res.status(400).send(e);
+    }
+    
+})
 
 router.patch("/updatedepartment/:id",async(req,res)=>{
     try
