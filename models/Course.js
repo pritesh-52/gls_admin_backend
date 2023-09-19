@@ -3,7 +3,7 @@ const CourseSchema=new moongoose.Schema({
     dept_id:{
         type:String,
         required:true,
-        unique:true
+    
 
     },
     course_name:{
