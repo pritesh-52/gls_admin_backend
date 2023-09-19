@@ -29,5 +29,5 @@ const FacultySchema=new Schema({
 
 })
 
-const faculty=new moongoose.model("faculty",FacultySchema);
+const faculty=new moongoose.model("Faculty",FacultySchema);
 module.exports=faculty;
