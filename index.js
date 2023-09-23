@@ -15,6 +15,7 @@ app.use('/admin/department',require('./routes/Department/department'));
 app.use('/admin/course',require('./routes/Course/course'));
 app.use('/admin/faculty',require('./routes/Faculty/faculty'));
 app.use('/admin/eventstype',require('./routes/Events_Type/eventstype'));
+app.use('/admin/eventlocation',require('./routes/Events_Location/eventslocation'));
 
 
 app.get("",(req,res)=>{
