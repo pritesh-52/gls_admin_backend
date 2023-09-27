@@ -17,6 +17,7 @@ app.use('/admin/faculty',require('./routes/Faculty/faculty'));
 app.use('/admin/eventstype',require('./routes/Events_Type/eventstype'));
 app.use('/admin/eventlocation',require('./routes/Events_Location/eventslocation'));
 app.use('/admin/notification',require('./routes/Notification/notification'));
+app.use('/app/api/faculty',require('./routes/App/faculty'));
 
 
 app.get("",(req,res)=>{
