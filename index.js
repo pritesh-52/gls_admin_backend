@@ -1,14 +1,22 @@
 const express = require('express');
-var cors = require('cors')
+//var cors = require('cors')
 const app = express()
 const port = 8000
 require("./db");
 
-app.use(cors())
+//app.use(cors())
 app.use(express.json())
 
 //connectToMongo();
 //app.use(express.json());
+
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
 
 app.use('/admin/login',require('./routes/user-auth/login'));
 app.use('/admin/department',require('./routes/Department/department'));
