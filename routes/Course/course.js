@@ -13,7 +13,12 @@ router.post("/add",async(req,res)=>{
     }
     catch(e)
     {
-        res.status(400).send(e);
+        if(e.code == 11000){
+            res.status(400).send({message : "Course Name is Already Exists"});
+        }
+        else{
+            res.status(400).send({message : "Problem to Add New Course"});
+        }
     }
 
 });
