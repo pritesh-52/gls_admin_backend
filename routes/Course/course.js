@@ -27,12 +27,10 @@ router.get("/getcourse",async(req,res)=>{
     try{
         const getdata=await Course.find();
         res.status(200).send(getdata);
-        res.json({"message":true});
     }
     catch(e)
     {
-        res.send(400).send(e);
-        res.json({"message":false});
+        res.status(400).send({message : "Problem to get Course"});
     }
 })
 
@@ -45,8 +43,7 @@ router.get("/getcourse/:id",async(req,res)=>{
     }
     catch(e)
     {
-        res.status(200).send(e);
-        res.json({"message":false});
+        res.status(400).send({message : "Problem to fetch Course Details"});
     }
 })
 
@@ -57,15 +54,14 @@ router.delete("/deletecourse/:id",async(req,res)=>{
         const deletecourse=await Course.findByIdAndDelete(_id);
         if(!req.params.id)
         {
-            return res.status(200).send();
+            return res.status(200).send({success : true});
         }
         res.send(deletecourse);
 
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":false});
+        res.status(400).send({message : "Problem to Delete Course"});
     }
 });
 
@@ -79,7 +75,12 @@ router.patch("/updatecourse/:id",async(req,res)=>{
     }
     catch(e)
     {
-        res.status(400).send(e);
+        if(e.code == 11000){
+            res.status(400).send({message : "Course Name is Already Exists"});
+        }
+        else{
+            res.status(400).send({message : "Problem to Update Course"});
+        }
     }
 
 });

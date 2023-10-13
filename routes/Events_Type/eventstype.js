@@ -10,11 +10,14 @@ router.post("/add",async(req,res)=>{
         const Eventstypedata=new Eventstype({type_of_events});
         const Adddata=await Eventstypedata.save();
         res.status(200).send(Adddata);
-        res.json({"message":true});
     }
     catch(e){
-        res.json({"message":false});
-        res.status(400).send(e);
+        if(e.code == 11000){
+            res.status(400).send({message : "Event Type is Already Exists"});
+        }
+        else{
+            res.status(400).send({message : "Problem to Add New Event Type"});
+        }
     }
 
 })
@@ -28,23 +31,20 @@ router.get("/geteventstype",async(req,res)=>{
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":false});
+        res.status(400).send({message : "Problem to get Event Types"});
     }
 })
 
 
 router.get("/geteventstype/:id",async(req,res)=>{
     try{
-    const _id=req.params.id;
-    const getdata=await Eventstype.findById(_id);
-    res.status(200).send(getdata);
-    res.json({"message":true});
+        const _id=req.params.id;
+        const getdata=await Eventstype.findById(_id);
+        res.status(200).send(getdata);
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":false});
+        res.status(400).send({message : "Problem to fetch Event Type Details"});
     } 
 
 })
@@ -56,7 +56,7 @@ router.delete("/deleteevents/:id",async(req,res)=>{
     }
     catch(e)
     {
-        res.status(400).send(e);
+        res.status(400).send({message : "Problem to Delete Event Type"});
 
     }
 
@@ -72,8 +72,12 @@ router.patch("/updateevents/:id",async(req,res)=>{
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":false});
+        if(e.code == 11000){
+            res.status(400).send({message : "Event Type is Already Exists"});
+        }
+        else{
+            res.status(400).send({message : "Problem to Update New Event Type"});
+        }
     }
 
 })
