@@ -13,7 +13,12 @@ router.post("/add",async(req,res)=>{
     }
     catch(e)
     {
-            res.status(400).send(e);
+        if(e.code == 11000){
+            res.status(400).send({message : "Department Name is Already Exists"});
+        }
+        else{
+            res.status(400).send({message : "Problem to Add New Department"});
+        }
     }
 
 });
@@ -25,13 +30,13 @@ router.delete("/delete/:id",async(req,res)=>{
         const deletedata=await Department.findByIdAndDelete(_id);
         if(!req.params.id)
         {
-            return res.status(200).send();
+            return res.status(200).send({success : true});
         }
         res.send(deletedata);
     }
     catch(e)
     {
-        res.status(400).send(e);
+        res.status(400).send({message : "Problem to Delete Department"});
     }
 
 });
@@ -45,7 +50,7 @@ router.get("/getdepartment",async(req,res)=>{
     }
     catch(e)
     {
-        res.status(400).send(e);
+        res.status(400).send({message : "Problem to get Departments"});
     }
 
 });
@@ -67,7 +72,7 @@ router.get("/getdepartment/:id",async(req,res)=>{
     }
     catch(e)
     {
-        res.status(400).send(e);
+        res.status(400).send({message : "Problem to fetch the Department Details"});
     }
     
 })
@@ -82,7 +87,12 @@ router.patch("/updatedepartment/:id",async(req,res)=>{
     }
     catch(e)
     {
-        res.status(400).send(e);
+        if(e.code == 11000){
+            res.status(400).send({message : "Department Name is Already Exists"});
+        }
+        else{
+            res.status(400).send({message : "Problem to Update Department"});
+        }
     }
 })
 module.exports=router;

@@ -10,13 +10,15 @@ router.post("/add",async(req,res)=>{
         const facultydata=new Faculty({firstname,lastname,email,phone,role,department_faculty});
         const adddata=await facultydata.save();
         res.status(200).send(adddata);
-        res.json({"message":true});
-
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":false});
+        if(e.code == 11000){
+            res.status(400).send({message : "Faculty is Already Exists"});
+        }
+        else{
+            res.status(400).send({message : "Problem to Add New Faculty"});
+        }
     }
 });
 
@@ -27,13 +29,10 @@ router.get("/getfaculty",async(req,res)=>{
     {
         const getdata=await Faculty.find();
         res.status(200).send(getdata);
-        res.json({"message":true});
-
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":true});
+        res.status(400).send({message : "Problem to get Faculty"});
     }
     
 });
@@ -43,12 +42,10 @@ router.get("/getfaculty/:id",async(req,res)=>{
         const _id=req.params.id;
         const getdata=await Faculty.findById(_id);
         res.status(200).send(getdata);
-        res.json({"message":true});
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":false});
+        res.status(400).send({message : "Problem to fetch Faculty details"});
     }
 })
 
@@ -58,12 +55,10 @@ router.delete("/deletefaculty/:id",async(req,res)=>{
         const _id=req.params.id;
         const deletedata=await Faculty.findByIdAndDelete(_id);
         res.status(200).send(deletedata);
-        res.json({"message":true});
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":false});
+        res.status(400).send({message : "Problem to Delete Faculty"});
     }
 
 })
@@ -73,13 +68,15 @@ router.patch("/updatefaculty/:id",async(req,res)=>{
         const _id=req.params.id;
         const updatadata=await Faculty.findByIdAndUpdate(_id,req.body);
         res.status(200).send(updatadata);
-        res.json({"message":true});
-
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":false});
+        if(e.code == 11000){
+            res.status(400).send({message : "Faculty is Already Exists"});
+        }
+        else{
+            res.status(400).send({message : "Problem to Update New Faculty"});
+        }
     }
 })
 module.exports=router;

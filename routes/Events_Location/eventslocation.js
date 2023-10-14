@@ -13,7 +13,12 @@ router.post("/add",async(req,res)=>{
     }
     catch(e)
     {
-            res.json({"message":false});
+        if(e.code == 11000){
+            res.status(400).send({message : "Event Location is Already Exists"});
+        }
+        else{
+            res.status(400).send({message : "Problem to Add New Event Location"});
+        }
     }
 });
 
@@ -27,8 +32,7 @@ router.get("/geteventlocation",async(req,res)=>{
     }
     catch(e)
     {
-            res.status(400).send(e);
-            res.json({"message":false});
+        res.status(400).send({message : "Problem to get Event Location"});
     }
 })
 
@@ -38,14 +42,17 @@ router.get("/geteventlocation/:id",async(req,res)=>{
     {
         const _id=req.params.id;
         const getdata=await Eventslocation.findById(_id);
-        res.status(200).send(getdata);
-        res.json({"message":true});
 
+        if(!getdata){
+            res.status(404).send("Record Not Found");
+        }
+        else{
+            res.status(200).send(getdata);
+        }
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":false});
+        res.status(400).send({message : "Problem to fetch the Event Location Details"});
     }
 })
 
@@ -58,8 +65,7 @@ router.delete("/deletelocation/:id",async(req,res)=>{
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":false});
+        res.status(400).send({message : "Problem to Delete Event Location"});
     }
 
 })
@@ -72,8 +78,12 @@ router.patch("/updatelocation/:id",async(req,res)=>{
     }
     catch(e)
     {
-        res.status(400).send(e);
-        res.json({"message":false});
+        if(e.code == 11000){
+            res.status(400).send({message : "Event Location is Already Exists"});
+        }
+        else{
+            res.status(400).send({message : "Problem to Update Event Location"});
+        }
 
     }
 })

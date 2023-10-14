@@ -5,8 +5,8 @@ const Faculty=require("../../models/Faculty");
 
 
 router.post('/login',[
-    body('email','Enter a Valid Email').isEmail(),
-    body('password','Password cannot be blank').exists()
+    // body('email','Enter a Valid Email').isEmail(),
+    // body('password','Password cannot be blank').exists()
 ], async (req,res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
