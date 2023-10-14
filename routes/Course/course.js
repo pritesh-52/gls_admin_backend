@@ -1,9 +1,10 @@
 const express=require("express");
 const router=express.Router();
 const Course=require("../../models/Course");
+const authentication=require("../../middleware/authentication");
 
 
-router.post("/add",async(req,res)=>{
+router.post("/add", authentication, async(req,res)=>{
     let={dept_id,course_name}=req.body;
     try{
         const coursedata=new Course({dept_id,course_name});

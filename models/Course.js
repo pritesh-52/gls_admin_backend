@@ -2,9 +2,7 @@ const moongoose=require("mongoose");
 const CourseSchema=new moongoose.Schema({
     dept_id:{
         type:String,
-        required:true,
-    
-
+        required:true,  
     },
     course_name:{
         type:String,
