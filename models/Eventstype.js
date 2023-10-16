@@ -3,6 +3,7 @@ const Eventstype=new moongoose.Schema({
     type_of_events:{
         type:String,
         required:true,
+        unique:true
     }
 })
 const Eventstypemodel=new moongoose.model("Eventstype",Eventstype);

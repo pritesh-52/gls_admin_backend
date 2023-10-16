@@ -2,7 +2,8 @@ const monngose=require("mongoose");
 const Eventslocationschema=new monngose.Schema({
     location:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     }
 })
 
